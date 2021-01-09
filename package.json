@@ -4,7 +4,10 @@
   "description": "Backend of Track Down",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon index.js"
+    "devStart": "nodemon index.js",
+    "build:ui": "rmdir /s /q build && cd ../track-down && npm run build && xcopy build \"C:\\Users\\JB MADHUBALA\\Projects\\track-down-backend\\build\" /e /i",
+    "deploy": "git push heroku master",
+    "deploy:full": "npm run build:ui && git add . && git commit -m ui_build && npm run deploy"
   },
   "keywords": [
     "backend"

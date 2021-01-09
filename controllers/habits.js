@@ -27,10 +27,10 @@ habitsRouter.get('/:id', async(request, response) => {
 
 habitsRouter.post('/', async(request, response) => {
     const body = request.body
-    const newHabit = {
-        habit_name = body.name,
-        habit_month = body.month
-    }
+    const newHabit = new Habit({
+        habit_name: body.name,
+        habit_month: body.month
+    })
     try {
         const savedHabit = await newHabit.save()
         response.status(201).json(savedHabit)
@@ -43,8 +43,8 @@ habitsRouter.post('/', async(request, response) => {
 habitsRouter.patch('/:id', async(request, response) => {
     const body = response.body
     const newHabit = {
-        habit_name = body.name,
-        habit_month = body.month
+        habit_name: body.name,
+        habit_month: body.month
     }
     try {
         const updatedHabit = await Habit.findByIdAndUpdate(request.params.id, newHabit, {new: true})
