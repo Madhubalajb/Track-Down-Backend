@@ -9,12 +9,7 @@ const habitScheme = mongoose.Schema({
         type: String,
         required: true
     },
-    habit_track: [
-        {
-            day: Number,
-            did_you_do_it: Boolean
-        },
-    ]
+    habit_track: [Boolean]
 })
 
 habitScheme.set('toJSON', {

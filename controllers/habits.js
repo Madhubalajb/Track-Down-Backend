@@ -28,8 +28,9 @@ habitsRouter.get('/:id', async(request, response) => {
 habitsRouter.post('/', async(request, response) => {
     const body = request.body
     const newHabit = new Habit({
-        habit_name: body.name,
-        habit_month: body.month
+        habit_name: body.habit_name,
+        habit_month: body.habit_month,
+        habit_track: body.habit_track
     })
     try {
         const savedHabit = await newHabit.save()
