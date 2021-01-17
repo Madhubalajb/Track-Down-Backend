@@ -8,7 +8,7 @@ const app = express()
 
 console.log(`Connection to ${config.MONGODB_URI}`)
 
-mongoose.connect(config.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
+mongoose.connect(config.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false})
     .then(() => {
         console.log('Connected to MongoDB')
     })
