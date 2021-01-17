@@ -1,6 +1,4 @@
 const habitsRouter = require('express').Router()
-const { response, json } = require('express')
-const { request } = require('../app')
 const Habit = require('../models/habit')
 
 // Get All
@@ -41,11 +39,10 @@ habitsRouter.post('/', async(request, response) => {
     }
 })
 
-habitsRouter.patch('/:id', async(request, response) => {
-    const body = response.body
+habitsRouter.put('/:id', async(request, response) => {
+    const body = request.body
     const newHabit = {
-        habit_name: body.name,
-        habit_month: body.month
+        habit_track: body.habit_track
     }
     try {
         const updatedHabit = await Habit.findByIdAndUpdate(request.params.id, newHabit, {new: true})
