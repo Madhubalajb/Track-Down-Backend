@@ -53,7 +53,7 @@ habitsRouter.post('/', async(request, response) => {
 
 habitsRouter.patch('/:id', getHabit, async(request, response) => {
     const body = request.body
-    response.habit.habit_track: body.habit_track
+    response.habit.habit_track = body.habit_track
     try {
         const updatedHabit = await response.habit.save()
         response.status(201).json(updatedHabit)

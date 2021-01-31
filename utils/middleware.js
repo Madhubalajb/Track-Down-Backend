@@ -1,7 +1,7 @@
 const tokenExtractor = (request, response, next) => {
     const authorization = request.get('Authorization')
-    if(authorization && authorization.toLowercase().startsWith('bearer ')) {
-        request.token = authorization.subString(7)
+    if(authorization && authorization.toLowerCase().startsWith('bearer ')) {
+        request.token = authorization.substring(7)
     }
     next()
 }
