@@ -9,7 +9,11 @@ const habitScheme = mongoose.Schema({
         type: String,
         required: true
     },
-    habit_track: [Boolean]
+    habit_track: [Boolean],
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 })
 
 habitScheme.set('toJSON', {
