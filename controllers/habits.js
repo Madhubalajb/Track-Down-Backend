@@ -4,7 +4,7 @@ const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 
 // Get All
-habitsRouter.get('/', async(request, response) => {
+habitsRouter.get('/', async(request, response, next) => {
     try {
         const habits = await Habit.find({}).populate('user', {username: 1, name: 1})
         response.json(habits.map(habit => habit.toJSON()))
@@ -15,7 +15,7 @@ habitsRouter.get('/', async(request, response) => {
 })
 
 // Get one
-habitsRouter.get('/:id', getHabit, async(request, response) => {
+habitsRouter.get('/:id', getHabit, async(request, response, next) => {
     try {
         response.json(response.habit)
     }
@@ -24,7 +24,7 @@ habitsRouter.get('/:id', getHabit, async(request, response) => {
     }
 })
 
-habitsRouter.post('/', async(request, response) => {
+habitsRouter.post('/', async(request, response, next) => {
     const body = request.body
     const decodedToken  = await jwt.verify(request.token, process.env.SECRET)
 
@@ -51,7 +51,7 @@ habitsRouter.post('/', async(request, response) => {
     }
 })
 
-habitsRouter.patch('/:id', getHabit, async(request, response) => {
+habitsRouter.patch('/:id', getHabit, async(request, response, next) => {
     const body = request.body
     response.habit.habit_track = body.habit_track
     try {
@@ -63,7 +63,7 @@ habitsRouter.patch('/:id', getHabit, async(request, response) => {
     }  
 })
 
-habitsRouter.delete('/:id', getHabit, async(request, response) => {
+habitsRouter.delete('/:id', getHabit, async(request, response, next) => {
     try {
         await response.habit.remove()
         response.status(204).end()
@@ -77,9 +77,8 @@ async function getHabit(request, response, next) {
     const decodedToken = await jwt.verify(request.token, process.env.SECRET)
     let habit
     try {
-        const User = await User.findById(decodedToken.id)
-        habit = await User.findById(request.params.id)
-
+        const user = await User.findById(decodedToken.id)
+        habit = await Habit.findById(request.params.id)
         if(habit.user.toString() === user.id.toString()) {
             response.habit = habit
         }
@@ -90,6 +89,7 @@ async function getHabit(request, response, next) {
     catch(exception) {
         next(exception)
     }
+    next()
 } 
 
 module.exports = habitsRouter 
